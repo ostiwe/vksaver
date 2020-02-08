@@ -1,0 +1,20 @@
+{
+  "license": "MIT",
+  "name": "ostiwe/vksaver",
+  "homepage": "https://github.com/ostiwe/vksaver",
+  "require": {
+    "php": ">=7.1",
+    "vkcom/vk-php-sdk": "^5.101"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ostiwe\\": "src/ostiwe-saver"
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ostiwe/vksaver.git"
+    }
+  ]
+}
