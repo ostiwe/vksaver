@@ -2,6 +2,14 @@
   "license": "BSD-3-Clause",
   "name": "ostiwe/vksaver",
   "homepage": "https://github.com/ostiwe/vksaver",
+  "keywords": [
+    "vk",
+    "vkontakte",
+    "bot",
+    "ru",
+    "php",
+    "php7"
+  ],
   "authors": [
     {
       "name": "Ostiwe",
