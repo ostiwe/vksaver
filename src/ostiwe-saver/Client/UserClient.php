@@ -67,14 +67,14 @@ class UserClient
      */
     public function callbackHandler($callbackObj = [])
     {
+        if (empty($callbackObj)) {
+            throw new Exception ('Empty message.');
+        }
         if (!isset($callbackObj['group_id']) || empty($callbackObj['group_id'])) {
             throw new Exception ('Param "group_id" is required.');
         }
         if (!isset($callbackObj['secret']) || empty($callbackObj['secret'])) {
             throw new Exception ('Param "secret" is required.');
-        }
-        if (empty($callbackObj)) {
-            throw new Exception ('Empty message.');
         }
         $groupId = $callbackObj['group_id'];
         $this->currentPubId = $groupId;
