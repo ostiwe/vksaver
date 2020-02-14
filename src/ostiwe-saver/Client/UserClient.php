@@ -70,6 +70,12 @@ class UserClient
         if (empty($callbackObj)) {
             throw new Exception ('Empty message.');
         }
+
+        if ($callbackObj['message']['from_id'] !== $this->userId) {
+            echo 'ok';
+            return;
+        }
+
         if (!isset($callbackObj['group_id']) || empty($callbackObj['group_id'])) {
             throw new Exception ('Param "group_id" is required.');
         }
