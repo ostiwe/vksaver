@@ -1,7 +1,14 @@
 {
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "name": "ostiwe/vksaver",
   "homepage": "https://github.com/ostiwe/vksaver",
+  "authors": [
+    {
+      "name": "Ostiwe",
+      "email": "ostiwe@icloud.com",
+      "role": "Developer"
+    }
+  ],
   "require": {
     "php": ">=7.1",
     "vkcom/vk-php-sdk": "^5.101"
