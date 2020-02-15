@@ -3,6 +3,7 @@
 namespace Ostiwe\Utils;
 
 use Exception;
+use Ostiwe\Handlers\PubHandler;
 use VK\Client\VKApiClient;
 use VK\Exceptions\Api\VKApiParamAlbumIdException;
 use VK\Exceptions\Api\VKApiParamHashException;
@@ -22,6 +23,10 @@ class Photos
     private $vk = null;
     private $userId = null;
 
+    /**
+     * Photos utils constructor.
+     * @param $userId
+     */
     public function __construct($userId)
     {
         if ($this->vk === null) {
@@ -33,9 +38,12 @@ class Photos
     }
 
     /**
-     * @param string $userToken
-     * @param array $photoIds
-     * @return array
+     * Downloads images from VK and places them in a temporary folder
+     *
+     * @param string $userToken Access user token
+     * @param array $photoIds An array consisting of identifiers that represent the IDs of the users who posted the photos,
+     * and the IDs of the photos themselves, going through the underscore (example: [1_129207899,6492_135055734] )
+     * @return array Array containing paths to images
      * @throws Exception
      */
     public function downloadPhotoFromVk(string $userToken, array $photoIds)
@@ -70,8 +78,10 @@ class Photos
     }
 
     /**
+     * Downloads images from the link (for extension)
+     *
      * @param string $photoUri
-     * @return array
+     * @return array Array containing paths to images
      * @throws Exception
      */
     public function downloadPhotoFromUri(string $photoUri)
@@ -88,15 +98,16 @@ class Photos
         file_put_contents($randName, file_get_contents($photoUri));
 
         if (filesize($randName) < 5) {
-            unset($randName);
-            $localPatchList = [];
+            unset($localPatchList[$randName]);
         }
 
         return $localPatchList;
     }
 
     /**
-     * @param array $attachments
+     * Retrieves the attachment IDs from message object for further processing
+     *
+     * @param array $attachments Array of attachments from the message object
      * @return array
      */
     private function getAttachmentsObjForExecuteMethod(array $attachments)
@@ -125,10 +136,10 @@ class Photos
     }
 
     /**
-     * @param string $userToken
-     * @param array $attachmentsObj
-     * @param bool $likedOnly
-     * @return array
+     * @param string $userToken Access user token
+     * @param array $attachmentsObj The array that was generated in the {@see getAttachmentsObjForExecuteMethod} method
+     * @param bool $likedOnly Process only with likes (if there is more than one image in the post)
+     * @return array Sorted array of attachments. (Depending on the likedOnly parameter)
      * @throws Exception
      */
     public function checkAttachments(string $userToken, array $attachmentsObj, bool $likedOnly)
@@ -196,10 +207,12 @@ class Photos
     }
 
     /**
-     * @param string $userToken
-     * @param $groupId
+     * Uploads images to the VK server for use in the {@see PubHandler::post} method
+     *
+     * @param string $userToken Access user token
+     * @param string|int $groupId ID of the community where you want to upload a photo to the wall (without the minus sign»)
      * @param array $photoPatchList
-     * @return array
+     * @return array Array of image IDs uploaded to the VK server (example: [-20629724_271945303,-20629724_271945301] )
      * @throws Exception
      */
     public function uploadWallPhotos(string $userToken, $groupId, array $photoPatchList)

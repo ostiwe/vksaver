@@ -13,6 +13,9 @@ class Wall
 {
     private $vk = null;
 
+    /**
+     * Wall constructor.
+     */
     public function __construct()
     {
         if ($this->vk === null) {
@@ -20,6 +23,12 @@ class Wall
         }
     }
 
+    /**
+     * @param string $userToken Access user token
+     * @param string|int $pubID ID of the community
+     * @return int
+     * @throws Exception
+     */
     public function getLastPostTime($userToken, $pubID)
     {
         try {
