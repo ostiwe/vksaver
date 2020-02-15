@@ -50,6 +50,7 @@ class UserClient
 
     /**
      * Handler constructor.
+     *
      * @param string|int $userId User ID
      * @param string $userToken Access user token
      * @param array $groups Array of arrays whose keys are group IDs
@@ -115,7 +116,7 @@ class UserClient
             throw new Exception ('Empty message.');
         }
 
-        if ($callbackObj['object']['message']['from_id'] != $this->userId) {
+        if ($callbackObj['type'] !== 'browser_plugin' && $callbackObj['object']['message']['from_id'] != $this->userId) {
             echo 'ok';
             return;
         }

@@ -1,6 +1,7 @@
 ## Ostiwe Saver
 
 [![Packagist Version](https://img.shields.io/packagist/v/ostiwe/vksaver?style=flat-square)](https://packagist.org/packages/ostiwe/vksaver)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/ostiwe/vksaver?style=flat-square)
 
 ### Описание
 Данный пакет предназначен для владельцев или редакторов сообществ в
