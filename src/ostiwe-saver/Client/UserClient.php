@@ -8,16 +8,44 @@ use Ostiwe\Utils\Photos;
 
 class UserClient
 {
+    /**
+     * Access user token
+     * @var string $userToken
+     */
     private $userToken = null;
+
+    /**
+     * User ID
+     * @var string|int $userId
+     * */
     private $userId = null;
 
+    /**
+     * Array of arrays whose keys are group IDs
+     * @var array $groups
+     * */
     private $groups = null;
 
+    /**
+     * ID of the community
+     * @var string|int $currentPubId
+     * */
     private $currentPubId = null;
 
+    /**
+     * @var VKApiClient $vk
+     * */
     private $vk = null;
+
+    /**
+     * @var Photos $utilsPhoto
+     * */
     private $utilsPhoto = null;
 
+    /**
+     * Patch to custom handlers for communities
+     * @var string $handlersPatch
+     * */
     private $handlersPatch = null;
 
     /**
@@ -87,7 +115,7 @@ class UserClient
             throw new Exception ('Empty message.');
         }
 
-        if ($callbackObj['message']['from_id'] !== $this->userId) {
+        if ($callbackObj['object']['message']['from_id'] != $this->userId) {
             echo 'ok';
             return;
         }
@@ -98,6 +126,7 @@ class UserClient
         if (!isset($callbackObj['secret']) || empty($callbackObj['secret'])) {
             throw new Exception ('Param "secret" is required.');
         }
+
         $groupId = $callbackObj['group_id'];
         $this->currentPubId = $groupId;
         if (($this->groups[$groupId]['secret'] !== $callbackObj['secret']) && $callbackObj['type'] !== 'browser_plugin') {

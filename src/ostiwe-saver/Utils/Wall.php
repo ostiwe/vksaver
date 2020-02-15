@@ -11,6 +11,9 @@ use VK\Exceptions\VKClientException;
 
 class Wall
 {
+    /**
+     * @var VKApiClient $vk
+     * */
     private $vk = null;
 
     /**

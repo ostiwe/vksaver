@@ -18,9 +18,14 @@ use VK\Exceptions\VKClientException;
 class Photos
 {
     /**
-     * @var VKApiClient|null
+     * @var VKApiClient|null $vk
      */
     private $vk = null;
+
+    /**
+     * User ID
+     * @var string|int $userId
+     * */
     private $userId = null;
 
     /**
@@ -42,7 +47,12 @@ class Photos
      *
      * @param string $userToken Access user token
      * @param array $photoIds An array consisting of identifiers that represent the IDs of the users who posted the photos,
-     * and the IDs of the photos themselves, going through the underscore (example: [1_129207899,6492_135055734] )
+     *                        and the IDs of the photos themselves, going through the underscore, example:
+     *
+     * <code>
+     *  $photoIds = [1_129207899,6492_135055734]
+     * </code>
+     *
      * @return array Array containing paths to images
      * @throws Exception
      */

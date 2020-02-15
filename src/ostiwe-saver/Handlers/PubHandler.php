@@ -28,13 +28,39 @@ use VK\Exceptions\VKClientException;
 
 class PubHandler
 {
+    /**
+     * Access user token
+     * @var string $userToken
+     * */
     public $userToken = null;
+
+    /**
+     * User ID
+     * @var string|int $userId
+     * */
     public $userId = null;
+
+    /**
+     * A community token allows working with API on behalf of a group, event or public page
+     * @var string $pubToken
+     * */
     public $pubToken = null;
+
+    /**
+     * Pub ID
+     * @var string|int $pubId
+     * */
     public $pubId = null;
 
+
+    /**
+     * @var VKApiClient $vk
+     * */
     public $vk = null;
 
+    /**
+     * @var Wall $utilsWall
+     * */
     public $utilsWall = null;
 
     /**

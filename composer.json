@@ -31,5 +31,8 @@
       "type": "vcs",
       "url": "https://github.com/ostiwe/vksaver.git"
     }
-  ]
+  ],
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "2.*"
+  }
 }
