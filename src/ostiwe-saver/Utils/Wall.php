@@ -54,7 +54,7 @@ class Wall
             return time();
         }
         if ($postsObj['count'] > 99 && $offset === 0) {
-            self::getLastPostTime($userToken, $pubID, $postsObj['count'] - 2);
+            return self::getLastPostTime($userToken, $pubID, $postsObj['count'] - 2);
         }
         $lastPost = array_pop($postsObj['items']);
         return $lastPost['date'];
