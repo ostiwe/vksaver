@@ -195,6 +195,21 @@ class UserClient
     }
 
     /**
+     * @param array $filesList
+     * @param $groupID
+     * @return array
+     * @throws Exception
+     */
+    public function uploadLocalFiles(array $filesList, $groupID)
+    {
+        try {
+            return $this->utilsPhoto->uploadWallPhotos($this->userToken, $groupID, $filesList);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getMessage());
+        }
+    }
+
+    /**
      * Browser extension handler.
      *
      * @param array $eventObj

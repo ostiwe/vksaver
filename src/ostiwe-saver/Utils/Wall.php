@@ -29,10 +29,11 @@ class Wall
     /**
      * @param string $userToken Access user token
      * @param string|int $pubID ID of the community
+     * @param int $offset
      * @return int
      * @throws Exception
      */
-    public function getLastPostTime($userToken, $pubID)
+    public function getLastPostTime($userToken, $pubID, $offset = 0)
     {
         try {
             $postsObj = $this->vk->wall()->get($userToken, [
@@ -50,6 +51,9 @@ class Wall
 
         if ($postsObj['count'] === 0) {
             return time();
+        }
+        if ($postsObj['count'] > 99 && $offset === 0) {
+            self::getLastPostTime($userToken, $pubID, $postsObj['count'] - 2);
         }
         $lastPost = array_pop($postsObj['items']);
         return $lastPost['date'];
