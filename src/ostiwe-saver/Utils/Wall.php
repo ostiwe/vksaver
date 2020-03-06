@@ -39,6 +39,7 @@ class Wall
             $postsObj = $this->vk->wall()->get($userToken, [
                 'owner_id' => -$pubID,
                 'count' => 100,
+                'offset' => $offset,
                 'filter' => 'postponed',
             ]);
         } catch (VKApiBlockedException $e) {
