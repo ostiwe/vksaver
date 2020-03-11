@@ -43,11 +43,11 @@ class Wall
                 'filter' => 'postponed',
             ]);
         } catch (VKApiBlockedException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKClientException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
 
         if ($postsObj['count'] === 0) {

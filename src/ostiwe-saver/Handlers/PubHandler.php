@@ -99,7 +99,7 @@ class PubHandler
         try {
             $postInfo = $this->post($pubParams, $attachmentsList, $postText);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
         $postDate = date('d.m.Y в H:i', $postInfo['date']);
         $textMessage = "Пост будет опубликован $postDate <br>";
@@ -108,7 +108,7 @@ class PubHandler
         try {
             $this->sendNotificationMessage($textMessage);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
     }
 
@@ -127,7 +127,7 @@ class PubHandler
         try {
             $lastPostPublishDate = $this->utilsWall->getLastPostTime($this->userToken, $this->pubId);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
         $publishDate = $lastPostPublishDate + ($pubParams['interval'] * 3600);
 
@@ -141,19 +141,19 @@ class PubHandler
             ]);
 
         } catch (VKApiWallAddPostException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiWallAdsPostLimitReachedException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiWallAdsPublishedException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiWallLinksForbiddenException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiWallTooManyRecipientsException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKClientException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
         return [
             'post_id' => $postId['post_id'],
@@ -179,31 +179,31 @@ class PubHandler
                 'attachment' => implode(',', $attachments)
             ]);
         } catch (VKApiMessagesCantFwdException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesChatBotFeatureException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesChatUserNoAccessException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesContactNotFoundException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesDenySendException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesKeyboardInvalidException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesPrivacyException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesTooLongForwardsException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesTooLongMessageException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesTooManyPostsException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiMessagesUserBlockedException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKApiException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKClientException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
     }
 }

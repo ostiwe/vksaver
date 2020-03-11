@@ -77,11 +77,11 @@ class Photos
             }
 
         } catch (VKApiException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (VKClientException $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
 
         return $localPatchList;
@@ -102,7 +102,7 @@ class Photos
         try {
             $randName = __DIR__ . '/tmp/image' . time() . random_int(99, 999999999) . '.jpg';
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), null, $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
         $localPatchList[] = $randName;
         file_put_contents($randName, file_get_contents($photoUri));
@@ -200,9 +200,9 @@ class Photos
                 }
 
             } catch (VKApiException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             } catch (VKClientException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             }
 
         } else {
@@ -234,16 +234,16 @@ class Photos
                     'group_id' => $groupId
                 ]);
             } catch (VKApiException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             } catch (VKClientException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             }
             try {
                 $uploadedPhotoInfo = $this->vk->getRequest()->upload($wallPhotoServer['upload_url'], 'photo', $photo);
             } catch (VKApiException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             } catch (VKClientException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             }
             try {
                 $savedPhotoInfo = $this->vk->photos()->saveWallPhoto($userToken, [
@@ -255,15 +255,15 @@ class Photos
                 $uploadedPhoto[] = "photo{$savedPhotoInfo[0]['owner_id']}_{$savedPhotoInfo[0]['id']}_{$savedPhotoInfo[0]['access_key']}";
                 unlink($photo);
             } catch (VKApiParamAlbumIdException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             } catch (VKApiParamHashException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             } catch (VKApiParamServerException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             } catch (VKApiException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             } catch (VKClientException $e) {
-                throw new Exception($e->getMessage(), null, $e);
+                throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
             }
 
             sleep(1);
