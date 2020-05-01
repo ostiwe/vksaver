@@ -184,24 +184,25 @@ class UserClient
         } catch (Exception $e) {
             file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/logs/markAsRead.log', $e->getMessage(), FILE_APPEND);
             file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/logs/markAsRead.log', "\n==========\n", FILE_APPEND);
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
 
         try {
             $attachments = $this->utilsPhoto->checkAttachments($this->userToken, $messageObj['attachments'], $likedOnly);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
 
         try {
             $attachmentsPathList = $this->utilsPhoto->downloadPhotoFromVk($this->userToken, $attachments);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
+
         try {
             $attachmentsList = $this->utilsPhoto->uploadWallPhotos($this->userToken, $groupId, $attachmentsPathList);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
         $pubHandler->handle($attachmentsList, [
             'interval' => $this->groups[$groupId]['post_interval']
@@ -219,7 +220,7 @@ class UserClient
         try {
             return $this->utilsPhoto->uploadWallPhotos($this->userToken, $groupID, $filesList);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
     }
 
@@ -235,12 +236,12 @@ class UserClient
         try {
             $downloadedPhoto = $this->utilsPhoto->downloadPhotoFromUri($eventObj['photo']);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
         try {
             $pubHandler = $this->loadMessageHandlerClasses($this->groups[$eventObj['group_id']]['name'] . 'Handler');
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
 
         if (empty($downloadedPhoto)) {
@@ -252,7 +253,7 @@ class UserClient
         try {
             $uploadedPhoto = $this->utilsPhoto->uploadWallPhotos($this->userToken, $eventObj['group_id'], $downloadedPhoto);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
 
         $pubHandler->handle($uploadedPhoto, [

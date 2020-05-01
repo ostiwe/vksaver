@@ -30,24 +30,28 @@ class PubHandler
 {
     /**
      * Access user token
+     *
      * @var string $userToken
      * */
     public $userToken = null;
 
     /**
      * User ID
+     *
      * @var string|int $userId
      * */
     public $userId = null;
 
     /**
      * A community token allows working with API on behalf of a group, event or public page
+     *
      * @var string $pubToken
      * */
     public $pubToken = null;
 
     /**
      * Pub ID
+     *
      * @var string|int $pubId
      * */
     public $pubId = null;
@@ -65,10 +69,11 @@ class PubHandler
 
     /**
      * PubHandler constructor.
-     * @param string $userToken Access user token
-     * @param string|int $userId User ID
-     * @param string $pubToken A community token allows working with API on behalf of a group, event or public page
-     * @param string|int $pubId Group ID
+     *
+     * @param string     $userToken Access user token
+     * @param string|int $userId    User ID
+     * @param string     $pubToken  A community token allows working with API on behalf of a group, event or public page
+     * @param string|int $pubId     Group ID
      */
     public function __construct($userToken, $userId, $pubToken, $pubId)
     {
@@ -89,9 +94,9 @@ class PubHandler
     /**
      * Handler for this community
      *
-     * @param array $attachmentsList Array of images uploaded to the server VK
-     * @param array $pubParams Parameters for the community. At this time, you need to set the interval
-     * @param string $postText The text of the post
+     * @param array  $attachmentsList Array of images uploaded to the server VK
+     * @param array  $pubParams       Parameters for the community. At this time, you need to set the interval
+     * @param string $postText        The text of the post
      * @throws Exception
      */
     public function handle(array $attachmentsList, array $pubParams, string $postText = '')
@@ -110,15 +115,24 @@ class PubHandler
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
+
+        return [
+            'pub_id' => $this->pubId,
+            'post_id' => $postInfo['post_id'],
+            'publish_date' => [
+                'unix' => $postInfo['date'],
+                'human' => $postDate
+            ]
+        ];
     }
 
     /**
      * Gets the time of the last post and puts the post in the queue for publication.
      * If there are no posts in the queue, the post will be published after the specified period.
      *
-     * @param array $pubParams Parameters for the community. At this time, you need to set the interval
-     * @param array $attachmentsList Array of images uploaded to the server VK
-     * @param string $postText The text that will be attached to the post
+     * @param array  $pubParams       Parameters for the community. At this time, you need to set the interval
+     * @param array  $attachmentsList Array of images uploaded to the server VK
+     * @param string $postText        The text that will be attached to the post
      * @return array Array containing the post id and the time of its publication
      * @throws Exception
      */
@@ -165,7 +179,7 @@ class PubHandler
      * Sends a notification message
      *
      * @param string $message
-     * @param array $attachments Array of images uploaded to the server VK
+     * @param array  $attachments Array of images uploaded to the server VK
      * @throws Exception
      */
     public function sendNotificationMessage(string $message, array $attachments = [])

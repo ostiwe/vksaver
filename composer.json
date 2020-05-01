@@ -19,7 +19,8 @@
   ],
   "require": {
     "php": ">=7.1",
-    "vkcom/vk-php-sdk": "^5.101"
+    "vkcom/vk-php-sdk": "^5.101",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {
